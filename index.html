@@ -90,7 +90,31 @@ body{background:radial-gradient(1200px 500px at 10% -10%,rgba(11,95,255,.10),tra
 .pill.lv{color:#fff;border:0;font-weight:800}.lvA0{background:#8b5cf6}.lvA1{background:#12a150}.lvA2{background:#06b6d4}.lvB1{background:#0b5fff}.lvB2{background:#f5a524;color:#2a1a00}.lvC1{background:#e5484d}
 .esdet{margin-bottom:8px}.esdet summary{list-style:none;display:flex;justify-content:space-between}.esdet[open]{border-color:var(--pri)}
 .flash{min-height:260px;background:linear-gradient(135deg,rgba(229,72,77,.08),rgba(245,165,36,.10))}.flash .w{font-size:40px}
+</style><style>/* ===== Kirish animatsiyasi ===== */
+body.intro-lock{overflow:hidden}
+body.intro-brand .brand{opacity:0}
+.top-in>*,main,footer{transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.top-in>:nth-child(2){transition-delay:.06s}.top-in>:nth-child(3){transition-delay:.12s}.top-in>:nth-child(4){transition-delay:.18s}.top-in>:nth-child(5){transition-delay:.24s}
+body.intro-lock .top-in>:not(.brand){opacity:0;transform:translateY(-12px)}
+body.intro-lock main,body.intro-lock footer{opacity:0;transform:translateY(28px)}
+#intro{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:hidden;animation:ibFail 0s 14s forwards}
+@keyframes ibFail{to{visibility:hidden;pointer-events:none}}
+.ib-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,#1d2d78 0%,#0c1233 52%,#070a1d 100%)}
+.ib-fx{position:absolute;inset:0;pointer-events:none}
+.ib-fx i{position:absolute;border-radius:50%;background:#9db6ff;opacity:.0;animation:ibFloat var(--d) ease-in-out infinite alternate}
+@keyframes ibFloat{from{opacity:.05;transform:translate(0,0)}to{opacity:.55;transform:translate(var(--dx),-46px)}}
+.ib-ring{position:absolute;left:50%;top:50%;width:min(60vw,420px);aspect-ratio:1;border-radius:50%;border:2px solid rgba(140,160,255,.7);opacity:0;transform:translate(-50%,-50%) scale(.2)}
+.ib-word{position:relative;display:flex;align-items:center;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:900;font-size:min(170px,17vw);line-height:1;letter-spacing:-.02em;filter:drop-shadow(0 0 26px rgba(120,140,255,.5))}
+.ib-k{position:relative;z-index:2;display:inline-block;padding:0 .04em;opacity:0;background:linear-gradient(135deg,#4d8dff,#a06bff);-webkit-background-clip:text;background-clip:text;color:transparent;will-change:transform}
+.ib-rest{display:inline-flex;overflow:hidden;max-width:0;padding:.14em 0;margin:-.14em 0}
+.ib-l{display:inline-block;opacity:0;background:linear-gradient(180deg,#fff,#c9d4ff);-webkit-background-clip:text;background-clip:text;color:transparent;will-change:transform}
+.ib-t{position:fixed;z-index:2;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:radial-gradient(circle,#fff,#7f9bff 55%,transparent 72%);pointer-events:none}
+.ib-skip{position:absolute;right:16px;top:14px;z-index:3;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#dfe6ff;border-radius:99px;padding:6px 14px;font-size:13px;cursor:pointer;backdrop-filter:blur(6px)}
+.ib-skip:hover{background:rgba(255,255,255,.2)}.ib-skip:focus-visible{outline:2px solid #fff;outline-offset:2px}
 </style></head><body>
+<script>document.body.classList.add('intro-lock','intro-brand');window.__ibF=setTimeout(function(){var o=document.getElementById('intro');if(o)o.remove();document.body.classList.remove('intro-lock','intro-brand')},14000)</script>
+<div id="intro" aria-hidden="true"><div class="ib-bg"></div><div class="ib-fx"><div class="ib-ring"></div></div><div class="ib-word"><span class="ib-k">K</span><span class="ib-rest"><span class="ib-l">h</span><span class="ib-l">a</span><span class="ib-l">b</span><span class="ib-l">i</span><span class="ib-l">b</span><span class="ib-l">’</span><span class="ib-l">s</span></span></div><button class="ib-skip" type="button">O‘tkazib yuborish</button></div>
+
 <header class="top"><div class="top-in"><a href="#/home" class="brand">Khabib's<small>IELTS</small></a>
 <button class="burger" id="burger" aria-label="Menyu">☰</button>
 <nav class="menu" id="menu"><a data-r="home" href="#/home">Bosh sahifa</a><a data-r="listening" href="#/listening">Listening</a><a data-r="reading" href="#/reading">Reading</a><a data-r="speaking" href="#/speaking">Speaking</a><a data-r="writing" href="#/writing">Writing</a><a data-r="mock" href="#/mock">Mock</a><a data-r="grammar" href="#/grammar">Daraja testi</a><a data-r="vocab" href="#/vocab">Lug'at</a><a data-r="ai" href="#/ai">🤖 AI</a><a data-r="spanish" href="#/spanish">🇪🇸 Ispan</a><a data-r="progress" href="#/progress">Natijalar</a><a data-r="books" href="#/books">Kitoblar</a></nav>
@@ -1532,4 +1556,76 @@ function boot(){
   const net=()=>{const e=$('#net');e.textContent=navigator.onLine?'● online':'● oflayn';e.classList.toggle('off',!navigator.onLine)};net();addEventListener('online',net);addEventListener('offline',net);
   addEventListener('hashchange',route);document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#/"]');if(!a)return;e.preventDefault();const h=a.getAttribute('href');if(location.hash===h)route();else{location.hash=h;setTimeout(()=>{if('#'+(location.hash.replace(/^#/,''))===h&&!window.__r)route()},0)}});route()}
 document.addEventListener('DOMContentLoaded',boot);
+</script>
+<script>(function(){
+const ov=document.getElementById('intro');if(!ov)return;
+const B=document.body,q=s=>ov.querySelector(s);
+const bg=q('.ib-bg'),fx=q('.ib-fx'),ring=q('.ib-ring'),word=q('.ib-word'),k=q('.ib-k'),rest=q('.ib-rest'),skip=q('.ib-skip');
+const letters=[...rest.children];
+let dead=false,trail=0;
+const done=()=>{if(dead)return;dead=true;clearInterval(trail);clearTimeout(window.__ibF);B.classList.remove('intro-lock','intro-brand');ov.remove()};
+skip.onclick=done;
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){done();return}
+const A=(el,kf,o)=>el.animate(kf,Object.assign({fill:'forwards'},o)).finished.then(()=>{if(dead)throw 0});
+const wait=ms=>new Promise(r=>setTimeout(r,ms)).then(()=>{if(dead)throw 0});
+for(let i=0;i<26;i++){const d=document.createElement('i'),s=2+Math.random()*4;
+  d.style.cssText=`left:${Math.random()*100}%;top:${20+Math.random()*75}%;width:${s}px;height:${s}px;--d:${2.5+Math.random()*3}s;--dx:${(Math.random()-.5)*60}px`;fx.appendChild(d)}
+const spark=(x,y,n,dist)=>{for(let i=0;i<n;i++){const t=document.createElement('b');t.className='ib-t';t.style.left=x+'px';t.style.top=y+'px';ov.appendChild(t);
+  const a=i/n*Math.PI*2+Math.random()*.4,r=dist*(.6+Math.random()*.6);
+  t.animate([{transform:'translate(0,0) scale(.8)',opacity:1},{transform:`translate(${Math.cos(a)*r}px,${Math.sin(a)*r}px) scale(0)`,opacity:0}],{duration:700,easing:'cubic-bezier(.1,.7,.3,1)'}).finished.then(()=>t.remove())}};
+const burst=()=>A(ring,[{transform:'translate(-50%,-50%) scale(.3)',opacity:.9},{transform:'translate(-50%,-50%) scale(2.4)',opacity:0}],{duration:1100,easing:'cubic-bezier(.2,.7,.2,1)'});
+
+async function run(){
+  rest.style.maxWidth='none';const w=rest.scrollWidth;rest.style.maxWidth='0px';
+  /* 1. K paydo bo'ladi */
+  burst().catch(()=>{});
+  await A(k,[{opacity:0,transform:'scale(.1) rotate(-70deg)',filter:'blur(14px)'},{opacity:1,transform:'scale(1.14) rotate(7deg)',filter:'blur(0px)',offset:.7},{opacity:1,transform:'scale(1) rotate(0deg)',filter:'blur(0px)'}],{duration:950,easing:'cubic-bezier(.22,1,.36,1)'});
+  /* 2. K orasidan "habib’s" chiqadi */
+  const grow=1000;
+  A(rest,[{maxWidth:'0px'},{maxWidth:w+'px'}],{duration:grow,easing:'cubic-bezier(.65,0,.25,1)'});
+  A(k,[{transform:'scale(1) rotate(0deg)'},{transform:'scale(1.07) rotate(-9deg)',offset:.35},{transform:'scale(1) rotate(0deg)'}],{duration:grow,easing:'ease-in-out'});
+  letters.forEach((l,i)=>A(l,[{opacity:0,transform:'translateX(-1.4em) rotate(-50deg) scale(.4)'},{opacity:1,transform:'translateX(0) rotate(0deg) scale(1)'}],{duration:720,delay:180+i*85,easing:'cubic-bezier(.34,1.56,.64,1)'}).catch(()=>{}));
+  await wait(grow+380);
+  /* to'lqin */
+  letters.forEach((l,i)=>A(l,[{transform:'translateY(0)'},{transform:'translateY(-.14em)',offset:.4},{transform:'translateY(0)'}],{duration:520,delay:i*60,easing:'ease-in-out'}).catch(()=>{}));
+  await wait(980);
+  /* 3. harflar K ichiga kiradi */
+  letters.slice().reverse().forEach((l,i)=>{const x=-(l.offsetLeft-rest.offsetLeft)-l.offsetWidth*.6;
+    A(l,[{opacity:1,transform:'translateX(0) rotate(0deg) scale(1)'},{opacity:1,transform:`translateX(${x*.7}px) rotate(-160deg) scale(.6)`,offset:.75},{opacity:0,transform:`translateX(${x}px) rotate(-260deg) scale(.2)`}],{duration:640,delay:i*55,easing:'cubic-bezier(.6,0,.8,.4)'}).catch(()=>{})});
+  await wait(760);
+  const shrink=A(rest,[{maxWidth:w+'px'},{maxWidth:'0px'}],{duration:650,easing:'cubic-bezier(.7,0,.3,1)'});
+  A(k,[{transform:'scale(1) rotate(0deg)'},{transform:'scale(1.38) rotate(-8deg)',offset:.3},{transform:'scale(.92) rotate(3deg)',offset:.62},{transform:'scale(1) rotate(0deg)'}],{duration:720,easing:'ease-out'}).catch(()=>{});
+  burst().catch(()=>{});
+  { const r=k.getBoundingClientRect();spark(r.left+r.width/2,r.top+r.height/2,14,r.width*.9) }
+  await shrink;await wait(220);
+  /* 4. K saytga uchib kiradi */
+  const brand=document.querySelector('.brand');
+  const tn=[...brand.childNodes].find(n=>n.nodeType===3&&n.nodeValue.trim());
+  const rg=document.createRange();rg.setStart(tn,0);rg.setEnd(tn,1);
+  const tr=rg.getBoundingClientRect(),kr=k.getBoundingClientRect();
+  const s=parseFloat(getComputedStyle(brand).fontSize)/parseFloat(getComputedStyle(k).fontSize);
+  const dx=(tr.left+tr.width/2)-(kr.left+kr.width/2),dy=(tr.top+tr.height/2)-(kr.top+kr.height/2);
+  const T=(x,y,sc,r,ry)=>`perspective(900px) translate(${x}px,${y}px) scale(${sc}) rotate(${r}deg) rotateY(${ry}deg)`;
+  trail=setInterval(()=>{const r=k.getBoundingClientRect();const t=document.createElement('b');t.className='ib-t';t.style.left=r.left+r.width/2+'px';t.style.top=r.top+r.height/2+'px';ov.appendChild(t);
+    t.animate([{transform:'scale(1)',opacity:.9},{transform:'scale(0)',opacity:0}],{duration:650}).finished.then(()=>t.remove())},38);
+  const fly=A(k,[
+    {transform:T(0,0,1,0,0),offset:0,easing:'cubic-bezier(.3,0,.2,1)'},
+    {transform:T(0,-80,1.2,-8,0),offset:.22,easing:'cubic-bezier(.45,0,.2,1)'},
+    {transform:T(dx*.42,dy*.42-150,.5,14,200),offset:.6,easing:'cubic-bezier(.4,0,.2,1)'},
+    {transform:T(dx,dy,s,0,360),offset:1}],{duration:1550});
+  wait(380).then(()=>{B.classList.remove('intro-lock')}).catch(()=>{});
+  A(bg,[{opacity:1},{opacity:0}],{duration:900,delay:420});
+  A(fx,[{opacity:1},{opacity:0}],{duration:600,delay:300});
+  A(skip,[{opacity:1},{opacity:0}],{duration:200});
+  await fly;clearInterval(trail);
+  /* 5. K header'ga qo'nadi */
+  B.classList.remove('intro-brand');
+  brand.animate([{clipPath:'inset(-40% 100% -40% 0)'},{clipPath:'inset(-40% -6% -40% 0)'}],{duration:750,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'});
+  spark(tr.left+tr.width/2,tr.top+tr.height/2,10,34);
+  await wait(520);
+  await A(word,[{opacity:1},{opacity:0}],{duration:260});
+  done();
+}
+run().catch(e=>{if(e!==0){console.error(e);done()}});
+})();
 </script></body></html>
